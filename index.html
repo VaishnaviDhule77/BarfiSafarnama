@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barfi movie </title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            color: #f0ece2;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #060809;
+        }
+
+        header {
+            height: 60px;
+            background-color: #060809;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(212, 149, 107, 0.15);
+        }
+
+        ul {
+            display: flex;
+            justify-content: space-evenly;
+            list-style-type: none;
+            padding-top: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        li > a {
+            text-decoration: none;
+        }
+
+        ul li {
+            position: relative;
+            cursor: pointer;
+            padding: 0 4px 6px 4px;
+            transition: color 0.3s ease;
+        }
+
+        ul li::after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4956b;
+            transition: width 0.4s ease;
+        }
+
+        ul li:hover { color: #d4956b; }
+        ul li:hover::after { width: 100%; }
+
+        #home {
+            height: 700px;
+            width: 100%;
+            overflow: hidden;
+            background-color: black;
+            position: relative; 
+        }
+
+        .vid {
+            height: 100%;      
+            width: 100%;
+            background-color: black;
+            position: relative; 
+        }
+
+        video {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;  
+        }
+
+        #home .vid::after {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 2;
+        }
+
+        .cast-heading {
+            text-align: center;
+            font-size: 42px;
+            font-weight: bold;
+            color: #d4956b;
+            margin-bottom: 60px;
+            flex-basis: 100%;
+        }
+
+        #cast {
+            min-height: 100vh;
+            width: 100%;
+            background-color: #060809;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            padding: 100px 40px 60px 40px;
+        }
+
+        .actor {
+            width: 320px;
+            background: rgba(20, 28, 24, 0.65);
+            border: 1px solid rgba(212, 149, 107, 0.15);
+            border-radius: 24px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 24px;
+        }
+
+        .actor:hover {
+            border-color: #d4956b;
+        }
+
+        .pic {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background-color: #151a17;
+            border-radius: 24px 24px 0 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pic > img {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%; width: 100%;
+            object-fit: cover;
+        }
+
+        .fi { z-index: 1; }
+        .se { z-index: 2; opacity: 0; }
+
+        .pic:hover .se { opacity: 1; }
+
+        .actor-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #f0ece2;
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+        }
+
+        .actor-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            max-width: 280px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .actor-role {
+            font-size: 15px;
+            font-weight: 400;
+            color: #d4956b;
+            font-style: italic;
+        }
+
+        .actor-bio {
+            font-size: 13px;
+            font-weight: normal;
+            color: #9a9488;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+
+        .btn {
+            height: 42px;
+            width: 140px;
+            background: transparent;
+            color: #d4956b;
+            border: 1px solid #d4956b;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: block;
+            margin: 16px auto 0 auto;
+        }
+
+        .btn:hover { 
+            background-color: #d4956b; 
+            color: #060809; 
+        }
+
+        #songs {
+            min-height: 100vh;      
+            width: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            flex-wrap: wrap;
+            gap: 40px 25px;          
+            padding: 100px 20px 60px 20px;
+        }
+
+        .player {
+            display: flex;
+            flex-direction: column;  
+            align-items: center;     
+            width: 300px;            
+            background-color: #111;  
+            border-radius: 12px;     
+            padding: 15px;         
+        }
+
+        .photo {
+            width: 100%;
+            height: 200px;           
+            background-color: #000;  
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;     
+        }
+
+        .photo > img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;     
+        }
+
+        .player > audio {
+            width: 100%;
+            height: 40px;            
+            margin-bottom: 15px;    
+        }
+
+        #trailer {
+            width: 100%;
+            background-color: #060809;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 40px 60px 40px;
+        }
+
+        .trailer-vid {
+            height: 500px;  
+            width: 80%;
+            max-width: 1000px;
+            background-color: black;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .trailer-vid video {
+            height: 100%;
+            width: 100%;
+        }
+
+        #reviews {
+            min-height: 100vh;
+            width: 100%;
+            background-color: #060809;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 100px 40px 60px 40px;
+        }
+
+        .review-card {
+            width: 350px;
+            background: rgba(20, 28, 24, 0.65);
+            border: 1px solid rgba(212, 149, 107, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .review-stars {
+            color: #d4956b;
+            font-size: 20px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            font-size: 15px;
+            color: #9a9488;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .reviewer-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #f0ece2;
+            text-align: right;
+        }
+        
+        #fanclub {
+            min-height: 100vh;       
+            width: 100%;
+            background-color: black;
+            display: flex;
+            flex-direction: column;  
+            align-items: center;     
+            padding: 100px 40px 60px 40px; /* Match other sections padding */
+        }
+
+       .msg {
+          width: 100%;
+          max-width: 400px;        
+          display: flex;
+          flex-direction: column;
+          gap: 15px;               
+          margin-bottom: 50px;     
+        }
+       .msg > input, 
+       .msg > textarea {
+         width: 100%;
+         border: 1px solid gray;
+         font-size: 16px;
+         padding: 12px;
+         border-radius: 5px;
+         background-color: transparent;
+         color: white;
+        }
+
+      .msg > input {
+        height: 45px;
+       }
+
+      .msg > textarea {
+       height: 80px;
+       resize: none;           
+      }
+
+     .ratings-container {
+       display: flex;
+       justify-content: space-evenly; 
+       align-items: flex-start;
+       width: 100%;
+       max-width: 1200px;
+       flex-wrap: wrap;               
+       gap: 40px 20px;
+     }
+
+     .rating-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 280px;           
+    }
+
+   .rating-card > h2 {
+      font-size: 22px;
+      color: white;
+      margin-bottom: 12px;
+     }
+
+   .stars {
+      display: flex;
+      flex-direction: row-reverse; 
+      gap: 6px;
+    }
+
+    .stars > input {
+      display: none;               
+    }
+
+    .stars > label {
+      color: #444;                 
+      cursor: pointer;
+    }
+
+   .stars > label::before {
+     content: '★';                
+     font-size: 32px;
+   }
+
+   .stars > input:checked ~ label,
+   .stars > label:hover,
+   .stars > label:hover ~ label {
+      color: #ffcc00;              
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-list">
+                <li> <a href="#home">Home</a></li>
+                <li> <a href="#cast">Cast</a></li>
+                <li> <a href="#songs">Songs</a></li>
+                <li> <a href="#trailer">Trailer</a></li>
+                <li> <a href="#reviews">Reviews</a></li>
+                <li> <a href="#fanclub">Fanclub</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="home">
+            <div class="vid">
+                <video src="./media/trailer1.mp4" autoplay muted loop></video>
+            </div>
+        </section>
+
+        <section id="cast">
+            <h2 class="cast-heading">Cast</h2>
+            
+            <div class="actor">
+                <div class="pic">
+                    <img src="./media/ranbir.jpg" alt="ranbir kapoor" class="fi">
+                    <img src="./media/ranbir2.jpg" alt="ranbir kapoor hover" class="se">
+                </div>
+                <p class="actor-name">Ranbir Kapoor</p>
+                <p class="actor-role">as Murphy "Barfi" Johnson</p>
+                <p class="actor-bio">A charming, optimistic, and mute young man who spreads happiness wherever he goes.</p>
+                <a href="https://en.wikipedia.org/wiki/Ranbir_Kapoor" target="_blank">
+                    <button class="btn">Know More</button>
+                </a>
+            </div>
+            
+            <div class="actor">
+                <div class="pic">
+                    <img src="./media/illeana.jpg" alt="Ileana D'Cruz" class="fi">
+                    <img src="./media/illeana2.jpg" alt="Ileana D'Cruz hover" class="se">
+                </div>
+                <div class="actor-info">
+                    <p class="actor-name">Ileana D'Cruz</p>
+                    <p class="actor-role">as Shruti Sengupta</p>
+                    <p class="actor-bio">A young woman torn between her deep affection for Barfi and societal/parental expectations.</p>
+                </div>
+                <a href="https://en.wikipedia.org/wiki/Ileana_D%27Cruz" target="_blank">
+                    <button class="btn">Know More</button>
+                </a>
+            </div>
+
+            <div class="actor">
+                <div class="pic">
+                    <img src="./media/priyanka.jpg" alt="Priyanka Chopra" class="fi">
+                    <img src="./media/priyanka1.jpg" alt="Priyanka Chopra hover" class="se">
+                </div>
+                <p class="actor-name">Priyanka Chopra</p>
+                <p class="actor-role">as Jhilmil Chatterjee</p>
+                <p class="actor-bio">An autistic girl and Barfi's childhood friend with whom he forms a deeply pure, unconditional bond.</p>
+                <a href="https://en.wikipedia.org/wiki/Priyanka_Chopra" target="_blank">
+                    <button class="btn">Know More</button>
+                </a>
+            </div>
+        </section>
+
+        <section id="songs">
+            <h2 class="cast-heading">Songs</h2>
+
+            <div class="player">
+                <div class="photo">
+                    <img src="./media/kyon poster.jpg" alt="Barfi Movie Poster" class="photo">
+                </div>
+                <audio controls>
+                    <source src="./media/kyon.mp3" type="audio/mpeg">
+                </audio>
+                <a href="./media/kyon.mp3" download>
+                    <button class="btn">Download</button>
+                </a>
+            </div>
+
+            <div class="player">
+                <div class="photo">
+                    <img src="https://i.ytimg.com/vi/OuNGySNJjWg/maxresdefault.jpg" alt="Barfi Movie Poster" class="photo">
+                </div>
+                <audio controls>
+                    <source src="./media/aashiyan.mp3" type="audio/mpeg">
+                </audio>
+                <a href="./media/aashiyan.mp3" download>
+                    <button class="btn">Download</button>
+                </a>
+            </div>
+
+            <div class="player">
+                <div class="photo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1zHssFrEggQPKEBHDP1L0KVyFIZQ66-NTZeyQth6svA&s=10" alt="Barfi Movie Poster" class="photo">
+                </div>
+                <audio controls>
+                    <source src="./media/phir le aaya dil.mp3" type="audio/mpeg">
+                </audio>
+                <a href="./media/phir le aaya dil.mp3" download>
+                    <button class="btn">Download</button>
+                </a>
+            </div>
+
+            <div class="player">
+                <div class="photo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE_BdMLrKfnBJYDt9mAgO6WBArRoMzWT_-CITbcKyMTw&s=10" alt="Barfi Movie Poster" class="photo">
+                </div>
+                <audio controls>
+                    <source src="./media/mai kya karoon.mp3" type="audio/mpeg">
+                </audio>
+                <a href="./media/mai kya karoon.mp3" download>
+                    <button class="btn">Download</button>
+                </a>
+            </div>
+
+            <div class="player">
+                <div class="photo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzjo5Z0OY1ccEe5nYFjqzJ_eBz91LKbD1TcCU5go6GIw&s=10" alt="Barfi Movie Poster" class="photo">
+                </div>
+                <audio controls>
+                    <source src="./media/ala barfi.mp3" type="audio/mpeg">
+                </audio>
+                <a href="./media/ala barfi.mp3" download>
+                    <button class="btn">Download</button>
+                </a>
+            </div>
+
+            <div class="player">
+                <div class="photo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfNBdkzCit62M2p1renGI4iZ9ZujBS2U8igktuJAspOw&s=10" alt="Barfi Movie Poster" class="photo">
+                </div>
+                <audio controls>
+                    <source src="./media/sawali si raat.mp3" type="audio/mpeg">
+                </audio>
+                <a href="./media/sawali si raat.mp3" download>
+                    <button class="btn">Download</button>
+                </a>
+            </div>
+        </section>
+
+        <section id="trailer">
+            <h2 class="cast-heading">Trailer</h2>
+            <div class="trailer-vid">
+                <video src="./media/trailer.mp4" controls></video>
+            </div>
+        </section>
+
+        <section id="reviews">
+            <h2 class="cast-heading">Reviews</h2>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"A heartwarming masterpiece that proves you don't need words to express love. Ranbir and Priyanka's performances are absolutely flawless and unforgettable."</p>
+                <p class="reviewer-name">- Taran Adarsh</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p class="review-text">"Visually stunning and emotionally resonant. Anurag Basu crafts a beautiful silent-era homage that tugs at your heartstrings with its pure simplicity."</p>
+                <p class="reviewer-name">- Rajeev Masand</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"One of the most beautifully crafted romantic dramas in Bollywood history. The music, the cinematography, and the chemistry between the leads is pure magic."</p>
+                <p class="reviewer-name">- Anupama Chopra</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p class="review-text">"Barfi is a whimsical ride through the streets of Darjeeling. It reminds us of the magic of silent cinema while delivering a deeply moving narrative."</p>
+                <p class="reviewer-name">- Komal Nahta</p>
+            </div>
+        </section>
+
+        <section id="fanclub">
+            <!-- Changed class to cast-heading to match other sections -->
+            <h2 class="cast-heading">Join the Fanclub</h2>
+            
+            <div class="msg">
+                <input type="text" placeholder="Enter your name" id="name">
+                <input type="email" placeholder="Enter your email" id="email">
+                <textarea name="message" placeholder="Why do you like Barfi?" id="msg"></textarea>
+            </div>
+
+            <h2 class="cast-heading">RATE THE ACTORS</h2>
+            
+            <div class="ratings-container">
+                <div class="rating-card">
+                    <h2>Ranbir Kapoor</h2>
+                    <div class="stars">
+                        <input type="radio" name="ranbir-rating" id="r-star5" value="5"><label for="r-star5"></label>
+                        <input type="radio" name="ranbir-rating" id="r-star4" value="4"><label for="r-star4"></label>
+                        <input type="radio" name="ranbir-rating" id="r-star3" value="3"><label for="r-star3"></label>
+                        <input type="radio" name="ranbir-rating" id="r-star2" value="2"><label for="r-star2"></label>
+                        <input type="radio" name="ranbir-rating" id="r-star1" value="1"><label for="r-star1"></label>
+                    </div>
+                </div>
+
+                <div class="rating-card">
+                    <h2>Ileana D'Cruz</h2>
+                    <div class="stars">
+                        <input type="radio" name="ileana-rating" id="i-star5" value="5"><label for="i-star5"></label>
+                        <input type="radio" name="ileana-rating" id="i-star4" value="4"><label for="i-star4"></label>
+                        <input type="radio" name="ileana-rating" id="i-star3" value="3"><label for="i-star3"></label>
+                        <input type="radio" name="ileana-rating" id="i-star2" value="2"><label for="i-star2"></label>
+                        <input type="radio" name="ileana-rating" id="i-star1" value="1"><label for="i-star1"></label>
+                    </div>
+                </div>
+
+                <div class="rating-card">
+                    <h2>Priyanka Chopra</h2>
+                    <div class="stars">
+                        <input type="radio" name="priyanka-rating" id="p-star5" value="5"><label for="p-star5"></label>
+                        <input type="radio" name="priyanka-rating" id="p-star4" value="4"><label for="p-star4"></label>
+                        <input type="radio" name="priyanka-rating" id="p-star3" value="3"><label for="p-star3"></label>
+                        <input type="radio" name="priyanka-rating" id="p-star2" value="2"><label for="p-star2"></label>
+                        <input type="radio" name="priyanka-rating" id="p-star1" value="1"><label for="p-star1"></label>
+                    </div>
+                </div>
+            </div>
+            <button class="btn">Submit</button>
+        </section>
+    </main>
+</body>
+</html>
