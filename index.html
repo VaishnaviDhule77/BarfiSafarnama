@@ -66,18 +66,25 @@
         ul li:hover::after { width: 100%; }
 
         #home {
-            height: 700px;
             width: 100%;
-            overflow: hidden;
-            background-color: black;
-            position: relative; 
+            height: 130vh; 
+            background-color: black !important;
+            overflow: hidden !important;
         }
 
         .vid {
             height: 100%;      
-            width: 100%;
+            width: 85%; /* Decreased width slightly */
             background-color: black;
             position: relative; 
+            padding: 30px;
+            margin: 0 auto; /* Added to center the decreased width container */
+        }
+
+        #home img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill; 
         }
 
         video {
@@ -319,7 +326,7 @@
             display: flex;
             flex-direction: column;  
             align-items: center;     
-            padding: 100px 40px 60px 40px; /* Match other sections padding */
+            padding: 100px 40px 60px 40px; 
         }
 
        .msg {
@@ -418,7 +425,7 @@
     <main>
         <section id="home">
             <div class="vid">
-                <video src="./media/trailer1.mp4" autoplay muted loop></video>
+                <img src="./media/poster.png" alt="Barfi Movie Poster">
             </div>
         </section>
 
@@ -579,7 +586,6 @@
         </section>
 
         <section id="fanclub">
-            <!-- Changed class to cast-heading to match other sections -->
             <h2 class="cast-heading">Join the Fanclub</h2>
             
             <div class="msg">
@@ -628,4 +634,4 @@
         </section>
     </main>
 </body>
-</html>
+</html>                
