@@ -19,6 +19,7 @@
 
         body {
             background-color: #060809;
+           
         }
 
         header {
@@ -406,6 +407,37 @@
    .stars > label:hover ~ label {
       color: #ffcc00;              
     }
+
+     .crousel{
+            height:700px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .banner{
+            height:90%;
+            width:80%;
+            overflow:hidden;
+        }
+        .slider{
+            height:100%;
+            width:800%;
+            display: flex;
+            font-size: 30px;
+        }
+        .banner-pic{
+            height:100%;
+            width:12.5%;
+        }
+        img{
+            height:100%;
+            width:100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -424,9 +456,35 @@
     
     <main>
         <section id="home">
-            <div class="vid">
-                <img src="./media/poster.png" alt="Barfi Movie Poster">
+           <div class="crousel">
+        <div class="banner">
+            <div class="slider" id="slider">
+                <div class="banner-pic">
+                    <img src="./media/pic1.jpg" >
+                </div>
+                <div class="banner-pic">
+                    <img src="./media/pic2.jpg" >
+                </div>
+                <div class="banner-pic">
+                    <img src="./media/pic3.jpg" >
+                </div>
+                <div class="banner-pic">
+                    <img src="./media/pic4.jpg" >
+                </div>
+                <div class="banner-pic">
+                    <img src="./media/pic5.jpg" >
+                </div>
+                <div class="banner-pic">
+                    <img src="./media/pic6.jpg" >
+                </div>
+                <div class="banner-pic">
+                    <img src="./media/pic1.jpg" >
+                </div>
             </div>
+        </div>
+    </div>
+
+    <script src="./index.js"></script>
         </section>
 
         <section id="cast">
